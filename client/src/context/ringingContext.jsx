@@ -10,7 +10,7 @@ export function RingingContextProvider({ children }) {
   const [isRinging, setIsRinging] = useState(true);
 
   useEffect(() => {
-    socket.on("connection", () => console.log("connected to server"));
+    socket.on("connect", () => console.log("connected to server"));
     socket.on("alarmState", newRingState => setIsRinging(newRingState));
   }, []);
 
