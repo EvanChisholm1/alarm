@@ -14,12 +14,12 @@ export function RingingContextProvider({ children }) {
     socket.on("alarmState", newRingState => setIsRinging(newRingState));
   }, []);
 
-  function stopRinging() {
-    socket.emit("stop");
+  function pauseRinging() {
+    socket.emit("pause");
   }
 
   return (
-    <RingingContext.Provider value={{ isRinging, stopRinging }}>
+    <RingingContext.Provider value={{ isRinging, pauseRinging }}>
       {children}
     </RingingContext.Provider>
   );

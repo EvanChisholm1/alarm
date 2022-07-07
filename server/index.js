@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(cors("*"));
 
 let isAlarmRunning = true;
+let isPaused = false;
 
 app.get("/", async (req, res) => {
   console.log(isAlarmRunning);
@@ -38,7 +39,25 @@ io.on("connection", socket => {
   socket.on("stop", () => {
     console.log("stopping alarm");
     isAlarmRunning = false;
+    isPaused = false;
     io.emit("alarmState", isAlarmRunning);
+  });
+
+  socket.on("pause", () => {
+    console.log("pausing alarm");
+    if (!isAlarmRunning) return;
+
+    isAlarmRunning = false;
+    isPaused = true;
+
+    io.emit("alarmState", isAlarmRunning);
+
+    setTimeout(() => {
+      if (!isPaused) return;
+      isAlarmRunning = true;
+      isPaused = false;
+      io.emit("alarmState", isAlarmRunning);
+    }, 5000);
   });
 });
 
