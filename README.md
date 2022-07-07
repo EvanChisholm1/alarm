@@ -19,3 +19,5 @@ this system involves 3 main parts
 1.  The server, which all communication goes through and serves as the source of truth for the ringing state
 2.  The pause button, this temporary disables the alarm so you have time to get to the off button
 3.  The off button, turns off the alarm but is placed somewhere far away, in my case the kitchen
+
+![diagram of system](./diagram.jpg)
