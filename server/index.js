@@ -25,16 +25,15 @@ app.get("/", async (req, res) => {
 app.post("/", async (req, res) => {
   console.log(req.body);
   isAlarmRunning = req.body.newState;
+  console.log(isAlarmRunning);
   io.emit("alarmState", isAlarmRunning);
   res.send({ isAlarmRunning });
 });
 
 io.on("connection", socket => {
   console.log("new connection");
-  socket.on("message", message => {
-    socket.emit("server message", `server: ${message}`);
-    console.log(message);
-  });
+
+  socket.emit("alarmState", isAlarmRunning);
 
   socket.on("stop", () => {
     console.log("stopping alarm");
