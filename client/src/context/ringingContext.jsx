@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { useContext, createContext, useState } from "react";
 import { io } from "socket.io-client";
 
-// const socket = io("http://localhost:3000/");
-const socket = io("http://localhost:3000/");
+const url = import.meta.env.VITE_SERVER || "http://localhost:3000/";
+console.log(import.meta.env.VITE_SERVER);
+const socket = io(url);
 export const RingingContext = createContext();
 
 export function RingingContextProvider({ children }) {
