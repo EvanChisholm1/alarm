@@ -9,10 +9,12 @@ export const RingingContext = createContext();
 
 export function RingingContextProvider({ children }) {
   const [isRinging, setIsRinging] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     socket.on("connect", () => console.log("connected to server"));
     socket.on("alarmState", newRingState => setIsRinging(newRingState));
+    socket.on("isPaused", newPausedState => setIsPaused(newPausedState));
   }, []);
 
   function pauseRinging() {
@@ -20,7 +22,7 @@ export function RingingContextProvider({ children }) {
   }
 
   return (
-    <RingingContext.Provider value={{ isRinging, pauseRinging }}>
+    <RingingContext.Provider value={{ isRinging, pauseRinging, isPaused }}>
       {children}
     </RingingContext.Provider>
   );

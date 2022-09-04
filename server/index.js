@@ -50,6 +50,7 @@ io.on("connection", socket => {
     isAlarmRunning = false;
     isPaused = false;
     io.emit("alarmState", isAlarmRunning);
+    io.emit("isPaused", false);
   });
 
   socket.on("pause", () => {
@@ -61,13 +62,15 @@ io.on("connection", socket => {
     hasBeenPaused = true;
 
     io.emit("alarmState", isAlarmRunning);
+    io.emit("isPaused", true);
 
     setTimeout(() => {
       if (!isPaused) return;
       isAlarmRunning = true;
       isPaused = false;
       io.emit("alarmState", isAlarmRunning);
-    }, 5000);
+      io.emit("isPaused", isPaused);
+    }, 60000);
   });
 });
 
